@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Master_Details_With_Crud</title>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    @await RenderSectionAsync("Style", required: false)
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: .90em;
+        }
+    </style>
+    <script>
+        function LoadData(courseId = null) {
+            var courseContainer = $("#courseContainer");
+            $.ajax({
+                url: "/Students/AddNewCourses/" + courseId ?? "",
+                type: "GET",
+                success: function (data) {
+                    courseContainer.append(data);
+                }
+            });
+        }
+        $(document).on("click", "#btnPlus", function (e) {
+            e.preventDefault();
+            LoadData();
+        });
+
+        $(document).on("click", "#deleteCourse", function (e) {
+            e.preventDefault();
+            $(this).parent().parent().remove();
+        });
+    </script>
+</head>
+<body>
+    <div class="container my-3">
+        <nav class="nav nav-pills bg-success">
+            <a asp-action="Index" asp-controller="Home" class="nav-link active">Home</a>
+            <a asp-action="Index" asp-controller="Courses" class="nav-link text-light">Course</a>
+            <a asp-action="Index" asp-controller="Students" class="nav-link text-light">Student</a>
+        </nav>
+    </div>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - Master_Details_With_Crud - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

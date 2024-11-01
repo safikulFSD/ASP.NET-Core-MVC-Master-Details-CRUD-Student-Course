@@ -1,0 +1,47 @@
+﻿@model ICollection<Master_Details_With_Crud.Models.Student>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col">
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-outline-primary btn-sm mb-2" asp-action="Create" asp-controller="Students">Add New Student</a>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between">
+                    <div>
+                        <img src="@item.Image" width="35" class="rounded-circle" />
+                        <b>Name :</b> @Html.DisplayFor(x => item.StudentName)
+                        <b>Date of Birth :</b> @Html.DisplayFor(x => item.DateOfBirth)
+                        <b>Phone :</b> @Html.DisplayFor(x => item.Phone)
+                        <b>Fresher :</b> @Html.DisplayFor(x => item.Fresher)
+                    </div>
+                    <div>
+                        <a asp-action="Edit" asp-controller="Students" class="btn btn-success btn-sm" asp-route-id="@item.StudentId">Edit</a>
+                        <a asp-action="Delete" class="btn btn-danger btn-sm" asp-controller="Students" asp-route-id="@item.StudentId">Delete</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead>
+                            <tr class="fw-bold">
+                                <th>Courses</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var i in item.StudentSubjects)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(x => i.Course.CourseName)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+</div>
